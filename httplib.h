@@ -1090,6 +1090,18 @@ public:
   Server &Delete(const std::string &pattern, Handler handler);
   Server &Delete(const std::string &pattern, HandlerWithContentReader handler);
   Server &Options(const std::string &pattern, Handler handler);
+  // WebDav
+  Server &Lock(const std::string &pattern, Handler handler);
+  Server &Lock(const std::string &pattern, HandlerWithContentReader handler);
+  Server &Unlock(const std::string &pattern, Handler handler);
+  Server &Copy(const std::string &pattern, Handler handler);
+  Server &Move(const std::string &pattern, Handler handler);
+  Server &PropFind(const std::string &pattern, Handler handler);
+  Server &PropFind(const std::string &pattern, HandlerWithContentReader handler);
+  Server &PropPatch(const std::string &pattern, Handler handler);
+  Server &PropPatch(const std::string &pattern, HandlerWithContentReader handler);
+  Server &MkCol(const std::string &pattern, Handler handler);
+  Server &MkCol(const std::string &pattern, HandlerWithContentReader handler);
 
   bool set_base_dir(const std::string &dir,
                     const std::string &mount_point = std::string());
@@ -1258,6 +1270,18 @@ private:
   Handlers delete_handlers_;
   HandlersForContentReader delete_handlers_for_content_reader_;
   Handlers options_handlers_;
+  // WebDav
+  Handlers lock_handlers_;
+  HandlersForContentReader lock_handlers_for_content_reader_;
+  Handlers unlock_handlers_;
+  Handlers copy_handlers_;
+  Handlers move_handlers_;
+  Handlers propfind_handlers_;
+  HandlersForContentReader propfind_handlers_for_content_reader_;
+  Handlers proppatch_handlers_;
+  HandlersForContentReader proppatch_handlers_for_content_reader_;
+  Handlers mkcol_handlers_;
+  HandlersForContentReader mkcol_handlers_for_content_reader_;
 
   HandlerWithResponse error_handler_;
   ExceptionHandler exception_handler_;
@@ -1474,6 +1498,89 @@ public:
 
   Result Options(const std::string &path);
   Result Options(const std::string &path, const Headers &headers);
+
+  // WebDav
+  Result Lock(const std::string &path);
+  Result Lock(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Params &params);
+  Result Lock(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers);
+  Result Lock(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const Params &params);
+  Result Lock(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
+  Result Unlock(const std::string &path);
+  Result Unlock(const std::string &path, const Headers &headers);
+
+  Result Copy(const std::string &path);
+  Result Copy(const std::string &path, const Headers &headers);
+
+  Result Move(const std::string &path);
+  Result Move(const std::string &path, const Headers &headers);
+
+  Result PropFind(const std::string &path);
+  Result PropFind(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Params &params);
+  Result PropFind(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers);
+  Result PropFind(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const Params &params);
+  Result PropFind(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
+  Result PropPatch(const std::string &path);
+  Result PropPatch(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Params &params);
+  Result PropPatch(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers);
+  Result PropPatch(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const Params &params);
+  Result PropPatch(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
+  Result MkCol(const std::string &path);
+  Result MkCol(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Params &params);
+  Result MkCol(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers);
+  Result MkCol(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const Params &params);
+  Result MkCol(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
   // clang-format on
 
   bool send(Request &req, Response &res, Error &error);
@@ -1830,6 +1937,89 @@ public:
 
   Result Options(const std::string &path);
   Result Options(const std::string &path, const Headers &headers);
+
+  // WebDav
+  Result Lock(const std::string &path);
+  Result Lock(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Params &params);
+  Result Lock(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers);
+  Result Lock(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const Params &params);
+  Result Lock(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result Lock(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
+  Result Unlock(const std::string &path);
+  Result Unlock(const std::string &path, const Headers &headers);
+
+  Result Copy(const std::string &path);
+  Result Copy(const std::string &path, const Headers &headers);
+
+  Result Move(const std::string &path);
+  Result Move(const std::string &path, const Headers &headers);
+
+  Result PropFind(const std::string &path);
+  Result PropFind(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Params &params);
+  Result PropFind(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers);
+  Result PropFind(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const Params &params);
+  Result PropFind(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result PropFind(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
+  Result PropPatch(const std::string &path);
+  Result PropPatch(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Params &params);
+  Result PropPatch(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers);
+  Result PropPatch(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const Params &params);
+  Result PropPatch(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result PropPatch(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
+  Result MkCol(const std::string &path);
+  Result MkCol(const std::string &path, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Params &params);
+  Result MkCol(const std::string &path, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers);
+  Result MkCol(const std::string &path, const Headers &headers, const char *body, size_t content_length, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, size_t content_length, ContentProvider content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, ContentProviderWithoutLength content_provider, const std::string &content_type, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const Params &params);
+  Result MkCol(const std::string &path, const Headers &headers, const UploadFormDataItems &items, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const std::string &boundary, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const UploadFormDataItems &items, const FormDataProviderItems &provider_items, UploadProgress progress = nullptr);
+  Result MkCol(const std::string &path, const Headers &headers, const std::string &body, const std::string &content_type, ContentReceiver content_receiver, DownloadProgress progress = nullptr);
+
   // clang-format on
 
   bool send(Request &req, Response &res, Error &error);
@@ -6120,6 +6310,7 @@ write_multipart_ranges_data(Stream &strm, const Request &req, Response &res,
 
 inline bool expect_content(const Request &req) {
   if (req.method == "POST" || req.method == "PUT" || req.method == "PATCH" ||
+      req.method == "LOCK" ||
       req.method == "DELETE") {
     return true;
   }
@@ -7341,6 +7532,69 @@ inline Server &Server::Options(const std::string &pattern, Handler handler) {
   return *this;
 }
 
+// WebDav
+inline Server &Server::Lock(const std::string &pattern, Handler handler) {
+  lock_handlers_.emplace_back(make_matcher(pattern), std::move(handler));
+  return *this;
+}
+inline Server &Server::Lock(const std::string &pattern,
+                            HandlerWithContentReader handler) {
+  lock_handlers_for_content_reader_.emplace_back(make_matcher(pattern),
+                                                 std::move(handler));
+  return *this;
+}
+
+inline Server &Server::Unlock(const std::string &pattern, Handler handler) {
+  unlock_handlers_.emplace_back(make_matcher(pattern), std::move(handler));
+  return *this;
+}
+
+inline Server &Server::Copy(const std::string &pattern, Handler handler) {
+  copy_handlers_.emplace_back(make_matcher(pattern), std::move(handler));
+  return *this;
+}
+
+inline Server &Server::Move(const std::string &pattern, Handler handler) {
+  move_handlers_.emplace_back(make_matcher(pattern), std::move(handler));
+  return *this;
+}
+
+inline Server &Server::PropFind(const std::string &pattern, Handler handler) {
+  propfind_handlers_.emplace_back(make_matcher(pattern), std::move(handler));
+  return *this;
+}
+
+inline Server &Server::PropFind(const std::string &pattern,
+                            HandlerWithContentReader handler) {
+  propfind_handlers_for_content_reader_.emplace_back(make_matcher(pattern),
+                                                 std::move(handler));
+  return *this;
+}
+
+inline Server &Server::PropPatch(const std::string &pattern, Handler handler) {
+  proppatch_handlers_.emplace_back(make_matcher(pattern), std::move(handler));
+  return *this;
+}
+
+inline Server &Server::PropPatch(const std::string &pattern,
+                            HandlerWithContentReader handler) {
+  proppatch_handlers_for_content_reader_.emplace_back(make_matcher(pattern),
+                                                 std::move(handler));
+  return *this;
+}
+
+inline Server &Server::MkCol(const std::string &pattern, Handler handler) {
+  mkcol_handlers_.emplace_back(make_matcher(pattern), std::move(handler));
+  return *this;
+}
+
+inline Server &Server::MkCol(const std::string &pattern,
+                            HandlerWithContentReader handler) {
+  mkcol_handlers_for_content_reader_.emplace_back(make_matcher(pattern),
+                                                 std::move(handler));
+  return *this;
+}
+
 inline bool Server::set_base_dir(const std::string &dir,
                                  const std::string &mount_point) {
   return set_mount_point(mount_point, dir);
@@ -7568,7 +7822,10 @@ inline bool Server::parse_request_line(const char *s, Request &req) const {
 
   thread_local const std::set<std::string> methods{
       "GET",     "HEAD",    "POST",  "PUT",   "DELETE",
-      "CONNECT", "OPTIONS", "TRACE", "PATCH", "PRI"};
+      "CONNECT", "OPTIONS", "TRACE", "PATCH", "PRI",
+      "LOCK",    "UNLOCK", "COPY", "MOVE", "MKCOL", "PROPFIND",
+      "PROPPATCH"
+  };
 
   if (methods.find(req.method) == methods.end()) {
     output_error_log(Error::InvalidHTTPMethod, &req);
@@ -8081,6 +8338,30 @@ inline bool Server::routing(Request &req, Response &res, Stream &strm) {
                 delete_handlers_for_content_reader_)) {
           return true;
         }
+      } else if (req.method == "LOCK") {
+        if (dispatch_request_for_content_reader(
+                req, res, std::move(reader),
+                lock_handlers_for_content_reader_)) {
+          return true;
+        }
+      } else if (req.method == "PROPFIND") {
+        if (dispatch_request_for_content_reader(
+                req, res, std::move(reader),
+                propfind_handlers_for_content_reader_)) {
+          return true;
+        }
+      } else if (req.method == "PROPPATCH") {
+        if (dispatch_request_for_content_reader(
+                req, res, std::move(reader),
+                proppatch_handlers_for_content_reader_)) {
+          return true;
+        }
+      } else if (req.method == "MKCOL") {
+        if (dispatch_request_for_content_reader(
+                req, res, std::move(reader),
+                mkcol_handlers_for_content_reader_)) {
+          return true;
+        }
       }
     }
 
@@ -8104,7 +8385,21 @@ inline bool Server::routing(Request &req, Response &res, Stream &strm) {
     return dispatch_request(req, res, options_handlers_);
   } else if (req.method == "PATCH") {
     return dispatch_request(req, res, patch_handlers_);
-  }
+  } else if (req.method == "LOCK") {
+    return dispatch_request(req, res, lock_handlers_);
+  } else if (req.method == "UNLOCK") {
+    return dispatch_request(req, res, unlock_handlers_);
+  } else if (req.method == "COPY") {
+    return dispatch_request(req, res, copy_handlers_);
+  } else if (req.method == "MOVE") {
+    return dispatch_request(req, res, move_handlers_);
+  } else if (req.method == "PROPFIND") {
+    return dispatch_request(req, res, propfind_handlers_);
+  } else if (req.method == "PROPPATCH") {
+    return dispatch_request(req, res, proppatch_handlers_);
+  } else if (req.method == "MKCOL") {
+    return dispatch_request(req, res, mkcol_handlers_);
+  } 
 
   res.status = StatusCode::BadRequest_400;
   return false;
@@ -9183,7 +9478,8 @@ inline bool ClientImpl::write_request(Stream &strm, Request &req,
       }
     } else {
       if (req.method == "POST" || req.method == "PUT" ||
-          req.method == "PATCH") {
+          req.method == "PATCH" || 
+          req.method == "LOCK" ) {
         req.set_header("Content-Length", "0");
       }
     }
@@ -10244,6 +10540,170 @@ inline Result ClientImpl::Options(const std::string &path,
 
   return send_(std::move(req));
 }
+
+
+// WebDav
+#define ClientImpl_Content_Methods(_METHOD_, _METHOD_STR_)\
+inline Result ClientImpl::_METHOD_(const std::string &path) {\
+  return _METHOD_(path, std::string(), std::string());\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path,\
+                               const Headers &headers) {\
+  return _METHOD_(path, headers, nullptr, 0, std::string());\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const char *body,\
+                               size_t content_length,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return _METHOD_(path, Headers(), body, content_length, content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const std::string &body,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return _METHOD_(path, Headers(), body, content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Params &params) {\
+  return _METHOD_(path, Headers(), params);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, size_t content_length,\
+                               ContentProvider content_provider,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return _METHOD_(path, Headers(), content_length, std::move(content_provider),\
+              content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path,\
+                               ContentProviderWithoutLength content_provider,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return _METHOD_(path, Headers(), std::move(content_provider), content_type,\
+              progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               const Params &params) {\
+  auto query = detail::params_to_query_str(params);\
+  return _METHOD_(path, headers, query, "application/x-www-form-urlencoded");\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path,\
+                               const UploadFormDataItems &items,\
+                               UploadProgress progress) {\
+  return _METHOD_(path, Headers(), items, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               const UploadFormDataItems &items,\
+                               UploadProgress progress) {\
+  const auto &boundary = detail::make_multipart_data_boundary();\
+  const auto &content_type =\
+      detail::serialize_multipart_formdata_get_content_type(boundary);\
+  const auto &body = detail::serialize_multipart_formdata(items, boundary);\
+  return _METHOD_(path, headers, body, content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               const UploadFormDataItems &items,\
+                               const std::string &boundary,\
+                               UploadProgress progress) {\
+  if (!detail::is_multipart_boundary_chars_valid(boundary)) {\
+    return Result{nullptr, Error::UnsupportedMultipartBoundaryChars};\
+  }\
+\
+  const auto &content_type =\
+      detail::serialize_multipart_formdata_get_content_type(boundary);\
+  const auto &body = detail::serialize_multipart_formdata(items, boundary);\
+  return _METHOD_(path, headers, body, content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               const char *body, size_t content_length,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return send_with_content_provider(_METHOD_STR_, path, headers, body, content_length,\
+                                    nullptr, nullptr, content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               const std::string &body,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return send_with_content_provider(_METHOD_STR_, path, headers, body.data(),\
+                                    body.size(), nullptr, nullptr, content_type,\
+                                    progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               size_t content_length,\
+                               ContentProvider content_provider,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return send_with_content_provider(_METHOD_STR_, path, headers, nullptr,\
+                                    content_length, std::move(content_provider),\
+                                    nullptr, content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               ContentProviderWithoutLength content_provider,\
+                               const std::string &content_type,\
+                               UploadProgress progress) {\
+  return send_with_content_provider(_METHOD_STR_, path, headers, nullptr, 0, nullptr,\
+                                    std::move(content_provider), content_type,\
+                                    progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               const UploadFormDataItems &items,\
+                               const FormDataProviderItems &provider_items,\
+                               UploadProgress progress) {\
+  const auto &boundary = detail::make_multipart_data_boundary();\
+  const auto &content_type =\
+      detail::serialize_multipart_formdata_get_content_type(boundary);\
+  return send_with_content_provider(\
+      _METHOD_STR_, path, headers, nullptr, 0, nullptr,\
+      get_multipart_content_provider(boundary, items, provider_items),\
+      content_type, progress);\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path, const Headers &headers,\
+                               const std::string &body,\
+                               const std::string &content_type,\
+                               ContentReceiver content_receiver,\
+                               DownloadProgress progress) {\
+  Request req;\
+  req.method = _METHOD_STR_;\
+  req.path = path;\
+  req.headers = headers;\
+  req.body = body;\
+  req.content_receiver =\
+      [content_receiver](const char *data, size_t data_length,\
+                         uint64_t /*offset*/, uint64_t /*total_length*/) {\
+        return content_receiver(data, data_length);\
+      };\
+  req.download_progress = std::move(progress);\
+\
+  if (max_timeout_msec_ > 0) {\
+    req.start_time_ = std::chrono::steady_clock::now();\
+  }\
+\
+  if (!content_type.empty()) { req.set_header("Content-Type", content_type); }\
+\
+  return send_(std::move(req));\
+}
+
+#define ClientImpl_Header_Methods(_METHOD_, _METHOD_STR_)\
+inline Result ClientImpl::_METHOD_(const std::string &path) {\
+  return Head(path, Headers());\
+}\
+inline Result ClientImpl::_METHOD_(const std::string &path,\
+                               const Headers &headers) {\
+  Request req;\
+  req.method = _METHOD_STR_;\
+  req.headers = headers;\
+  req.path = path;\
+  if (max_timeout_msec_ > 0) {\
+    req.start_time_ = std::chrono::steady_clock::now();\
+  }\
+  return send_(std::move(req));\
+}\
+
+ClientImpl_Content_Methods(Lock, "LOCK")
+ClientImpl_Header_Methods(Unlock, "UNLOCK")
+ClientImpl_Header_Methods(Copy, "COPY")
+ClientImpl_Header_Methods(Move, "MOVE")
+ClientImpl_Content_Methods(PropFind, "PROPFIND")
+ClientImpl_Content_Methods(PropPatch, "PROPPATCH")
+ClientImpl_Content_Methods(MkCol, "MKCOL")
 
 inline void ClientImpl::stop() {
   std::lock_guard<std::mutex> guard(socket_mutex_);
